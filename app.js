@@ -1,6 +1,8 @@
 const express = require('express');
-const dotenv = require("dotenv")
-dotenv.config()
+const dotenv = require("dotenv");
+const path = require('path');
+
+dotenv.config(); // Load environment variables from .env file
 const app = express();
 const port = 3000;
 
@@ -8,7 +10,6 @@ const port = 3000;
 app.use(express.json());
 
 // Define the secret key
-
 const SECRET_KEY = process.env.TOKEN;
 
 // Middleware for checking the secret key
@@ -35,10 +36,12 @@ app.put('/data', checkSecretKey, (req, res) => {
   res.send('Data table received and logged successfully.');
 });
 
-// Base route
+// Serve static files from the "public" directory
+app.use(express.static('public'));
+
+// Base route to serve the main HTML file
 app.get('/', (req, res) => {
-  res.send('slo hangout website');
-  res.render("main.html")
+  res.sendFile(path.join(__dirname, 'public', 'main.html')); // Adjust path if needed
 });
 
 // Start the server
