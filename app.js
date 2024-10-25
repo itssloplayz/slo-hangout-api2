@@ -38,6 +38,7 @@ app.put('/data', checkSecretKey, (req, res) => {
 // Base route
 app.get('/', (req, res) => {
   res.send('slo hangout website');
+  res.render("main.html")
 });
 
 // Start the server
